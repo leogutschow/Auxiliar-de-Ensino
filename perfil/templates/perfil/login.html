@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block 'conteudo' %}
+<h1>LOG IN</h1>
+<form method='POST' action="{% url 'login' %}">
+    {% csrf_token %} 
+    <table>
+    {{ form }}
+    <tr>
+        <td>
+            <input type='submit' value="Enviar">
+        </td>
+    </tr>
+    </table>
+</form>
+
+{% endblock %}
