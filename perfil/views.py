@@ -1,24 +1,15 @@
+
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic import FormView
 from .models import Perfil
 from .forms import FormUsuario
+from prova.models import Prova
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
-
-class Dashboard(ListView):
-    template_name = 'perfil/dashboard.html'
-    model = Perfil
-    context_object_name = 'perfil'
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('login')
-            
-        return super().dispatch(request, *args, **kwargs)
-
 
 class SignIn(FormView):
     template_name = 'perfil/signin.html'
@@ -46,11 +37,11 @@ class SignIn(FormView):
         
         perfil.save()
         
-        return redirect('dashboard')
+        return redirect('login')
     
 class LogIn(LoginView):
     template_name = 'perfil/login.html'
-    next_page = 'dashboard'
+    next_page = 'dashboard:index'
     
 class LogOut(LogoutView):
     pass

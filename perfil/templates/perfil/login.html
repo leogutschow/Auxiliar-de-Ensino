@@ -2,7 +2,7 @@
 
 {% block 'conteudo' %}
 <h1>LOG IN</h1>
-<form method='POST' action="{% url 'login' %}">
+<form method='POST' action="{% url 'perfil:login' %}">
     {% csrf_token %} 
     <table>
     {{ form }}
