@@ -1,6 +1,7 @@
 from django.db import models
 from perfil.models import Perfil
 from django.utils import timezone
+from django.utils.text import slugify
 from ckeditor.fields import RichTextField
 
 
@@ -15,6 +16,7 @@ class Prova(models.Model):
     recuperacao = models.BooleanField(default=False)
     publico = models.BooleanField(default=False)
     teste_texto = RichTextField()
+    slug = models.SlugField(default=None, blank=True, null=True)
     
     def __str__(self):
         return self.nome_prova
@@ -23,6 +25,9 @@ class Prova(models.Model):
         if not self.nome_prova:
             
             self.nome_prova = f'Prova {self.serie} {self.data_criacao}'
+
+        if not self.slug:
+            self.slug = slugify(f'{self.nome_prova}-{self.serie}')
             
             
         return super().save()

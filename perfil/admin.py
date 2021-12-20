@@ -6,7 +6,7 @@ from .models import Perfil
 
 class PerfilAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'usuario', 'nome', 'sobrenome', 'especializacao'
+        'id', 'usuario', 'nome', 'sobrenome', 'especializacao', 'foto_perfil'
     )
     
     

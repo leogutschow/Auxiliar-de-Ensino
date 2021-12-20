@@ -1,29 +1,52 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
+from django.views.generic.detail import DetailView
 from perfil.models import Perfil
 from prova.models import Prova
+from django.db.models import Q
+
+#TODO Criar SideBar da Dashboard
 
 
 # Create your views here.
 
-class Index(ListView):
+class Index(LoginRequiredMixin, ListView):
     template_name = 'dashboard/dashboard.html'
     model = Perfil
     context_object_name = 'perfil'
+    redirect_field_name = 'perfil:login'
 
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_authenticated:
-            return redirect('perfil:login')
-            
-        return super().dispatch(request, *args, **kwargs)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        perfil = Perfil.objects.get(usuario_id=self.request.user.id)
+        print(perfil)
+        context["perfil"] = perfil
+        return context
     
 
 class Provas(Index):
     extra_context = {
-        'provas' : Prova.objects.all()
+        'provas': Prova.objects.all()
     }
-    context_object_name = 'provas'
     
     def get_queryset(self):
         query_set = Prova.objects.filter(perfil_autor_id=self.request.user.id)
         return query_set
+
+class ProvaDetalhe(LoginRequiredMixin, DetailView):
+    template_name = 'dashboard/prova_detalhe.html'
+    model = Prova
+    context_object_name = 'prova'
+    extra_context = {
+        'perfil': Perfil.objects.all()
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        prova = self.get_object()
+        perfil = Perfil.objects.get(usuario_id=self.request.user.id)
+        context['prova'] = prova
+        context['perfil'] = perfil
+
+        return context

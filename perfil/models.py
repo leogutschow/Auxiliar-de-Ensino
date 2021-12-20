@@ -12,6 +12,7 @@ class Perfil(models.Model):
     email = models.EmailField()
     especializacao = models.ForeignKey(Especializacao, on_delete=models.DO_NOTHING, default=2)
     data_criacao = models.DateTimeField(default=timezone.now)
+    foto_perfil = models.ImageField(upload_to='perfil/%Y/%m', blank=True, null=True)
     
     def __str__(self):
         return f'{self.nome} {self.sobrenome}' or self.usuario

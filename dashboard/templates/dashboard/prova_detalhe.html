@@ -1,0 +1,15 @@
+{% extends 'dashboard/dashboard.html' %}
+
+{% block 'dashboard' %}
+
+    <button type='button' value='Editar Prova'>
+        <a href="{% url 'prova:prova_edit' prova.slug%}">Editar Prova</a>
+    </button>
+
+    <h1>{{ prova.nome_prova }}</h1> <h4>{{ prova.note }}</h4>
+    <h3>{{ prova.serie }}</h3>
+
+    {{ prova.teste_texto|safe }}
+    
+
+{% endblock %}

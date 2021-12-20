@@ -1,14 +1,28 @@
 {% extends 'base.html' %}
 
 {% block 'conteudo' %}
+    {% if perfil.foto_perfil %}
+        <img src="{{ perfil.foto_perfil.url }}" alt='Esta é a imagem'>
 
-<h1>Olá {{ user.username }}</h1>
+    {% endif %}
 
+    {% if perfil.nome %}
+        <h1>Olá {{ perfil.nome }} {{ perfil.sobrenome }}</h1>
 
-    {% for prova in provas %}
-        {% if prova.nome_prova %}
-            {{ prova.nome_prova }}
-        {% endif %}
-    {% endfor %}
+    {% else %}
+        <h1>Olá {{ user.username }}</h1>
+    {% endif %}
+
+    {% block 'dashboard' %}
+
+       
+
+        {% for prova in provas %}
+            <a href="{% url 'dashboard:prova_detalhe' prova.slug %}">
+                {{prova.nome_prova}} {{prova.serie}}
+            </a>
+        {% endfor %}
+    
+    {% endblock %}
 
 {% endblock %}

@@ -37,7 +37,7 @@ class SignIn(FormView):
         
         perfil.save()
         
-        return redirect('login')
+        return redirect('perfil:login')
     
 class LogIn(LoginView):
     template_name = 'perfil/login.html'
