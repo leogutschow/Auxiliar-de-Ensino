@@ -20,8 +20,10 @@ class Index(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         perfil = Perfil.objects.get(usuario_id=self.request.user.id)
+        provas = Prova.objects.filter(perfil_autor_id=perfil.id)
         print(perfil)
         context["perfil"] = perfil
+        context["provas"] = provas
         return context
     
 
@@ -34,19 +36,3 @@ class Provas(Index):
         query_set = Prova.objects.filter(perfil_autor_id=self.request.user.id)
         return query_set
 
-class ProvaDetalhe(LoginRequiredMixin, DetailView):
-    template_name = 'dashboard/prova_detalhe.html'
-    model = Prova
-    context_object_name = 'prova'
-    extra_context = {
-        'perfil': Perfil.objects.all()
-    }
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data()
-        prova = self.get_object()
-        perfil = Perfil.objects.get(usuario_id=self.request.user.id)
-        context['prova'] = prova
-        context['perfil'] = perfil
-
-        return context

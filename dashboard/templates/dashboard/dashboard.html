@@ -13,12 +13,14 @@
         <h1>Olá {{ user.username }}</h1>
     {% endif %}
 
+    <button type='button'>
+        <a href={% url 'prova:prova_criar' %}>Criar Prova</a>
+    </button>
+
     {% block 'dashboard' %}
 
-       
-
         {% for prova in provas %}
-            <a href="{% url 'dashboard:prova_detalhe' prova.slug %}">
+            <a href="{% url 'prova:prova_detalhe' prova.slug %}">
                 {{prova.nome_prova}} {{prova.serie}}
             </a>
         {% endfor %}

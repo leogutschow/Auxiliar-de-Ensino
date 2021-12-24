@@ -21,7 +21,7 @@ class Prova(models.Model):
     def __str__(self):
         return self.nome_prova
     
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.nome_prova:
             
             self.nome_prova = f'Prova {self.serie} {self.data_criacao}'
@@ -31,5 +31,24 @@ class Prova(models.Model):
             
             
         return super().save()
-    
+
+
+class Pergunta(models.Model):
+    prova = models.ForeignKey(Prova, on_delete=models.CASCADE)
+    pergunta_texto = models.TextField()
+    tipo = models.CharField(
+        max_length=1,
+        choices=(
+            ('D', 'Dissertatíva'),
+            ('O', 'Optativa'),
+                ),
+        default=1
+        )
+
+
+class Resposta(models.Model):
+    pergunta = models.ForeignKey(Pergunta, on_delete=models.CASCADE)
+
+
+
     

@@ -1,0 +1,17 @@
+<p>
+    Tem certeza que deseja excluir {{ prova.nome_prova }}
+    
+    <form action='{% url 'prova:prova_deletar' prova.id%}' method="POST">
+        {% csrf_token %}
+
+        <a href="{% url 'prova:prova_detalhe' prova.slug%}">
+            Cancelar
+        </a>
+        
+        <input type='submit' name='Confimar'>
+
+    </form>
+
+
+
+</p>

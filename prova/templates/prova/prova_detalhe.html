@@ -1,9 +1,13 @@
-{% extends 'dashboard/dashboard.html' %}
+{% extends 'base.html' %}
 
-{% block 'dashboard' %}
+{% block 'conteudo' %}
 
     <button type='button' value='Editar Prova'>
         <a href="{% url 'prova:prova_edit' prova.slug%}">Editar Prova</a>
+    </button>
+
+    <button type='button' value='Deletar Prova'>
+        <a href="{% url 'prova:prova_deletar' prova.id%}">Deletar Prova</a>
     </button>
 
     <h1>{{ prova.nome_prova }}</h1> <h4>{{ prova.note }}</h4>
