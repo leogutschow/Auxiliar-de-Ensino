@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DetailView
 from django.views.generic.edit import CreateView, DeleteView
 from perfil.models import Perfil
@@ -78,7 +79,7 @@ class ProvaDeletar(DeleteView, LoginRequiredMixin):
     model = Prova
     template_name = 'prova/prova_delete.html'
     redirect_field_name = 'perfil:login'
-    success_url = 'dashboard:index'
+    success_url = reverse_lazy('dashboard:provas')
     context_object_name = 'prova'
     
 
@@ -91,6 +92,6 @@ class ProvaDeletar(DeleteView, LoginRequiredMixin):
         prova.delete()
         
 
-        return redirect('dashboard:provas')
+        return super().delete(self, request, *args, **kwargs)
 
     
