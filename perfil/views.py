@@ -1,7 +1,10 @@
 
-from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from typing import List
+from django.shortcuts import render, redirect, get_object_or_404
+from django.views.generic import ListView, DetailView, TemplateView
 from django.views.generic import FormView
+
+from amigos.models import ListaAmigos
 from .models import Perfil
 from .forms import FormUsuario
 from prova.models import Prova
@@ -46,6 +49,21 @@ class LogIn(LoginView):
 class LogOut(LogoutView):
     pass
 
-    
-    
+class PerfilUsuario(DetailView):
+    template_name = 'perfil/perfil_index.html'
+    model = Perfil
+    context_object_name = 'perfil'
+
+
+    def get_context_data(self, **kwargs):
+        contexto = super().get_context_data(**kwargs)
+        perfil = self.get_object()
+        lista_amigos = ListaAmigos.objects.get(user=perfil.usuario_id)
+        contexto['perfil'] = perfil
+        contexto['lista_amigos'] = lista_amigos
+        
+
+        return contexto
+
+  
     

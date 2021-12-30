@@ -22,6 +22,7 @@ urlpatterns = [
     path('perfil/', include('perfil.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('prova/', include('prova.urls')),
+    path('amigos/', include('amigos.urls')),
     path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

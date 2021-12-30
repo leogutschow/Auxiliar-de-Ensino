@@ -1,17 +1,19 @@
 <!--TODO Criar _navbar do template de editar a prova-->
+<!--TODO Melhorar forma como a prova esta sendo exibida-->
 
 <form method='POST' action='#edita_prova'>
     {% csrf_token %}
     <table>
 
-        {{ form }}
-        <tr>
-            <td>
-                {% for pergunta in perguntas %}
-                    {{ pergunta.pergunta_texto }}
-                {% endfor %}
-            </td>
-        </tr>
+            {{ form }}
+            <hr>
+            {% for pergunta in perguntas %}
+
+                {{ pergunta }}
+            <hr>
+                {{ respostas }}
+            {% endfor %}
+
         <tr>
             <td>
                 <input value='Salvar Edição' type='submit'>

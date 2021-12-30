@@ -48,6 +48,14 @@ class Pergunta(models.Model):
 
 class Resposta(models.Model):
     pergunta = models.ForeignKey(Pergunta, on_delete=models.CASCADE)
+    resposta1 = models.CharField(max_length=500, default='')
+    resposta2 = models.CharField(max_length=500, default='')
+    resposta3 = models.CharField(max_length=500, default='')
+    resposta4 = models.CharField(max_length=500, default='')
+    resposta5 = models.CharField(max_length=500, default='')
+    resposta6 = models.CharField(max_length=500, default='')
+    resposta7 = models.CharField(max_length=500, default='')
+    resposta8 = models.CharField(max_length=500, default='')
 
 
 

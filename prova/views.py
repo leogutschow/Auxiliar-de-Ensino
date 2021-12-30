@@ -1,10 +1,12 @@
+from django.db.models import fields
+from django.forms.models import inlineformset_factory
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DetailView
 from django.views.generic.edit import CreateView, DeleteView
 from perfil.models import Perfil
 from django.contrib.auth.mixins import LoginRequiredMixin
-from .models import Pergunta, Prova
+from .models import Pergunta, Prova, Resposta
 from .forms import FormProva, FormPergunta
 
 
@@ -50,12 +52,39 @@ class ProvaEdit(UpdateView, LoginRequiredMixin):
 
 class ProvaCriar(CreateView, LoginRequiredMixin):
     template_name = 'prova/prova_edit.html'
-    form_class = FormProva
     redirect_field_name = 'perfil:login'
+    form_class = FormProva
+    formset_pergunta = inlineformset_factory(Prova, Pergunta, 
+                                    fields=('pergunta_texto',),
+                                    form=FormProva)
+    formset_respostas = inlineformset_factory(Pergunta, Resposta,
+                                                fields=(
+                                                    'resposta1',
+                                                    'resposta2',
+                                                    'resposta3',
+                                                    'resposta4',
+                                                    'resposta5',
+                                                    'resposta6',
+                                                    'resposta7',
+                                                    'resposta8',
+                                                    ),
+                                                    form=FormPergunta)
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        if self.request.POST:
+            data['perguntas'] = self.formset_pergunta(self.request.post)
+            data['respostas'] = self.formset_respostas(self.request.post)
+        else:
+            data['perguntas'] = self.formset_pergunta()
+            data['respostas'] = self.formset_respostas()
+
+        return data
 
 
     def form_valid(self, form):
         data = form.cleaned_data
+        print(data)
 
         perfil = Perfil.objects.get(
             usuario_id=self.request.user.id

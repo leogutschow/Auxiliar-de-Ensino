@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block 'conteudo' %}
+
+    {% if perfil.foto_perfil %}
+        <p>
+            {{ perfil.foto_perfil.url }}
+        </p>
+    {% endif %}
+
+    <h1>{{ perfil.nome }} {{ perfil.sobrenome }}</h1>
+
+    {% if perfil.usuario_id != user.id %}
+
+        {% if perfil.usuario_id in lista_amigos.friends%}
+
+            <h3>Já são Amigos</h3>
+
+            <button type='button' value='Desfazer Amizade' method='POST'>
+                <a href="#">Desfazer Amizade</a>
+            </button>
+        
+        {% else %}
+
+            <button type='button' value='Adicionar Amigo' method='POST'>
+                <a href="{% url 'amigo:mandar_solicitacao' perfil.id %}">Adicionar Amigo</a>
+            </button>
+
+        {% endif %}  
+
+    {% endif %}
+
+
+{% endblock %}

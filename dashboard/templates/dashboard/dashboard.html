@@ -10,8 +10,13 @@
         <h1>Olá {{ perfil.nome }} {{ perfil.sobrenome }}</h1>
 
     {% else %}
-        <h1>Olá {{ user.username }}</h1>
+        <h1>Olá {{ perfil.usuario }}</h1>
     {% endif %}
+
+
+    <button type='button'>
+        <a href={% url 'perfil:perfil_detalhe' perfil.slug %}>Ver Perfil</a>
+    </button>
 
     <button type='button'>
         <a href={% url 'prova:prova_criar' %}>Criar Prova</a>
